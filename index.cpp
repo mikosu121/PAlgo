@@ -101,3 +101,87 @@ void hapusMahasiswa(const string& nim) {
     }
     cout << "Data tidak ditemukan.\n";
 }
+
+// Fungsi untuk menyimpan data mahasiswa ke file
+void simpanKeFile(const char* filename) {
+    FILE* file = fopen(filename, "w");
+    if (!file) {
+        cout << "Gagal membuka file.\n";
+        return;
+    }
+
+    Node* temp = head;
+    while (temp) {
+        fprintf(file, "%s;%s;%s;%.2f\n",
+                temp->data.nim.c_str(),
+                temp->data.nama.c_str(),
+                temp->data.jurusan.c_str(),
+                temp->data.ipk);
+        temp = temp->next;
+    }
+
+    fclose(file);
+    cout << "Data berhasil disimpan ke \"" << filename << "\".\n";
+}
+
+// Fungsi untuk menampilkan menu
+void menu() {
+    int pilihan;
+    string nim;
+    Mahasiswa mhs;
+
+    do {
+        cout << "\n--- MENU MAHASISWA ---\n";
+        cout << "1. Tampilkan Data\n";
+        cout << "2. Tambah Mahasiswa\n";
+        cout << "3. Cari Mahasiswa\n";
+        cout << "4. Urutkan IPK\n";
+        cout << "5. Hapus Mahasiswa\n";
+        cout << "6. Simpan ke File\n";
+        cout << "7. Keluar\n";
+        cout << "Pilih menu: "; cin >> pilihan; cin.ignore();
+
+        switch (pilihan) {
+            case 1:
+                tampilkanData();
+                break;
+            case 2:
+                cout << "NIM: "; getline(cin, mhs.nim);
+                cout << "Nama: "; getline(cin, mhs.nama);
+                cout << "Jurusan: "; getline(cin, mhs.jurusan);
+                cout << "IPK: "; cin >> mhs.ipk; cin.ignore();
+                tambahMahasiswa(mhs);
+                break;
+            case 3:
+                cout << "Masukkan NIM: "; getline(cin, nim);
+                {
+                    Mahasiswa* hasil = cariMahasiswa(nim);
+                    if (hasil)
+                        cout << "Ditemukan: " << hasil->nama << ", IPK: " << hasil->ipk << endl;
+                    else
+                        cout << "Data tidak ditemukan.\n";
+                }
+                break;
+            case 4:
+                urutkanIPK();
+                break;
+            case 5:
+                cout << "Masukkan NIM: "; getline(cin, nim);
+                hapusMahasiswa(nim);
+                break;
+            case 6:
+                simpanKeFile("data_mahasiswa.txt");
+                break;
+            case 7:
+                cout << "Terima kasih!\n";
+                break;
+            default:
+                cout << "Pilihan tidak valid.\n";
+        }
+    } while (pilihan != 7);
+}
+
+int main() {
+    menu();
+    return 0;
+}
