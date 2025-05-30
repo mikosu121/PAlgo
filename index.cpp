@@ -1,19 +1,18 @@
 #include <iostream>
+#include <string>
+#include <cstdio>
 using namespace std;
 
-struct mahasiswa {
+struct Mahasiswa {
+    string nim;
     string nama;
-    int NIM;
-    int nilai;
-    mahasiswa* next;
-    mahasiswa* prev;
+    string jurusan;
+    float ipk;
 };
 
-int main()
-{
-    cout<<"nama mahasiswa:">>endl;
-    cout<<"NIM:">>endl;
-    
+struct Node {
+    Mahasiswa data;
+    Node* next;
+};
 
-    return 0;
-}
+Node* head = nullptr;
