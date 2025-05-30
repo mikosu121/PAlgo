@@ -11,7 +11,8 @@ struct mahasiswa {
 
 int main()
 {
-    
+    cout<<"nama mahasiswa:">>endl;
+    cout<<"NIM:">>endl;
     
 
     return 0;
